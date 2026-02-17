@@ -72,7 +72,7 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
                         <div className="w-8 h-8 rounded-lg bg-primary-color flex items-center justify-center">
                             <span className="text-white font-bold text-sm">A</span>
                         </div>
-                        <span className="font-semibold text-lg text-primary-color">Ayo CRM</span>
+                        <span className="font-semibold text-lg text-primary-color">aYo CRM</span>
                     </div>
                 )}
                 {collapsed && (
