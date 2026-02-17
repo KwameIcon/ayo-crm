@@ -1,4 +1,4 @@
-import { User, Phone, Mail, Tag, FileText, Image } from 'lucide-react';
+import { User, Phone, Mail, Tag, FileText, Image, Package2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
@@ -26,7 +26,7 @@ function DetailRow({ icon: Icon, label, value, className }: DetailRowProps) {
     );
 }
 
-export default function DetailsTab({ ticket }: {ticket: any}) {
+export default function DetailsTab({ ticket }: { ticket: any }) {
     return (
         <div className="space-y-6 p-1">
             {/* Customer Information */}
@@ -69,6 +69,23 @@ export default function DetailsTab({ ticket }: {ticket: any}) {
                             </Badge>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            {/* Product and policy */}
+            <div>
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                    <Package2 className="w-4 h-4" />
+                    Product & Policy Information
+                </h3>
+                <div className="bg-gray-50 dark:bg-slate-800/50 rounded-lg p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <DetailRow icon={Package2} label="Product" value={ticket.product_name} />
+                    <DetailRow icon={FileText} label="Policy" value={ticket.specifics} />
+                    {/* <DetailRow icon={Mail} label="Email" value={ticket.email} />
+                    <DetailRow icon={FileText} label="Affected Policy/Service" value={ticket.affected_policy} />
+                    {ticket.policy_number && (
+                        <DetailRow icon={FileText} label="Policy Number" value={ticket.policy_number} />
+                    )} */}
                 </div>
             </div>
 

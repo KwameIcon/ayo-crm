@@ -21,7 +21,7 @@ export const products = [
   {
     id: 'annual_cover',
     name: 'Annual Cover',
-    types: ['New Purchase', 'Renewal', 'Claims', 'Policy Update', 'Premium Payment', 'Cancellation']
+    types: ['Gold', 'Silver', 'Bronze']
   },
   {
     id: 'family_cover',
@@ -36,7 +36,7 @@ export const products = [
   {
     id: 'medcover',
     name: 'MedCover',
-    types: ['New Enrollment', 'Hospital Network', 'Claims', 'Pre-authorization', 'Policy Update', 'Renewal']
+    types: ['Platinium', 'Gold', 'Silver']
   }
 ];
 
