@@ -3,7 +3,7 @@ import { Ticket, Clock, AlertCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import StatCard from './StatCard';
-import CreateTicketModal from './CreateTicketModal';
+import CreateTicketModal from './createTicketModal/CreateTicketModal';
 
 
 const statusColors = {

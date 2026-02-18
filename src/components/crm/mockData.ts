@@ -230,3 +230,85 @@ export const generateMockSMS = () => {
 };
 
 export const mockSMS = generateMockSMS();
+
+
+
+export const specifics = [
+  {
+    type: 'enquiry',
+    options : [
+      { name: 'policy_info', label: 'Policy Information' },
+      { name: 'policy_premium', label: 'Policy Premium',},
+      { name: 'claims', label: 'Claims' },
+      { name: 'family_member', label: 'Family Member/ Beneficiary' },
+      { name: 'ussd', label: 'USSD and Portal' },
+      { name: 'product_options', label: 'Product Options' },
+    ],
+    departmentOptions: [
+      { name: 'customer_service', label: 'Customer Service' },
+      { name: 'sales', label: 'Sales' },
+      { name: 'claims_team', label: 'Claims Team' },
+      { name: 'product_project_team', label: 'Product/Project Team' },
+      { name: 'marketing', label: 'Marketing' },
+      { name: 'it', label: 'IT' },
+    ]
+  },
+  {
+    type: 'request',
+    options : [
+      { name: 'policy_management', label: 'Policy Management' },
+      { name: 'beneficiary_family_member', label: 'Beneficiary/Family Member Covered' },
+      { name: 'payments_deductions', label: 'Payments and Deductions' },
+      { name: 'claims_support', label: 'Claims Support' },
+      { name: 'documentations', label: 'Documentations' },
+      { name: 'technical_support', label: 'Tecnical Support' },
+      { name: 'cancellation_reinstatement', label: 'Cancellation/ Reinstatement' },
+      { name: 'refund', label: 'Refund' },
+    ],
+    departmentOptions: [
+      { name: 'customer_service', label: 'Customer Service' },
+      { name: 'claims_team', label: 'Claims Team' },
+      { name: 'product_project_team', label: 'Product/Project Team' },
+      { name: 'marketing', label: 'Marketing' },
+      { name: 'it', label: 'IT' },
+    ]
+  },
+  {
+    type: 'complaint',
+    options : [
+      { name: 'payment_issues', label: 'Payment Issues' },
+      { name: 'claims_process_status', label: 'Claims Process and Status' },
+      { name: 'communication_failures', label: 'Communication Failures' },
+      { name: 'portal_ussd_issues', label: 'Portal/USSD Issues' },
+      { name: 'policy_misunderstanding', label: 'Policy Misunderstanding' },
+      { name: 'policy_access_issues', label: 'Policy Access Issues' },
+      { name: 'service_delays', label: 'Service Delays' },
+    ],
+    departmentOptions: [
+      { name: 'customer_service', label: 'Customer Service' },
+      { name: 'operations', label: 'Operations' },
+      { name: 'claims', label: 'Claims' },
+      { name: 'product_project_team', label: 'Product/Project Team' },
+      { name: 'it', label: 'IT' },
+      { name: 'finance', label: 'Finance' },
+      { name: 'qa', label: 'QA' },
+      { name: 'call_center', label: 'Call Center' },
+      { name: 'sales', label: 'Sales' },
+    ]
+  },
+  {
+    type: 'compliment',
+    options : [
+      { name: 'customer_service', label: 'Excellent Customer Service' },
+      { name: 'claims_payment', label: 'Prompt Claims Payment' },
+      { name: 'support', label: 'Helpful Support' },
+    ],
+    departmentOptions: [
+      { name: 'customer_service', label: 'Customer Service' },
+      { name: 'claims_team', label: 'Claims Team' },
+      { name: 'sales', label: 'Sales' },
+      { name: 'marketing', label: 'Marketing' },
+      { name: 'it', label: 'IT' },
+    ]
+  }
+]

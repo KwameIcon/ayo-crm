@@ -5,7 +5,7 @@ import TicketFilters from '@/components/crm/TicketFilters';
 import TicketTable from '@/components/crm/TicketTable';
 import KanbanBoard from '@/components/crm/KanbanBoard';
 import TicketDetailModal from '@/components/crm/TicketDetailModal';
-import CreateTicketModal from '@/components/crm/CreateTicketModal';
+import CreateTicketModal from '@/components/crm/createTicketModal/CreateTicketModal';
 import { mockTickets } from '@/components/crm/mockData';
 
 
