@@ -36,15 +36,24 @@ export default function DepartmentChart({ tickets }: DepartmentChartProps) {
             <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data} layout="vertical" margin={{ left: 20 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke={theme === 'dark' ? '#334155' : '#e5e7eb'} />
-                        <XAxis type="number" tick={{ fill: theme === 'dark' ? '#94a3b8' : '#6b7280' }} />
+                        <CartesianGrid
+                            strokeDasharray="3 3"
+                            stroke={theme === 'dark' ? '#333' : '#cccccc'}
+                        />
+                        <XAxis
+                            type="number"
+                            // tick={{ fill: theme === 'dark' ? '#94a3b8' : '#6b7280' }}
+                        />
                         <YAxis
                             dataKey="name"
                             type="category"
                             width={100}
-                            tick={{ fill: theme === 'dark' ? '#94a3b8' : '#6b7280', fontSize: 12 }}
+                            // tick={{ fill: theme === 'dark' ? '#94a3b8' : '#6b7280', fontSize: 12 }}
                         />
-                        <Tooltip content={<CustomTooltip />} />
+                        <Tooltip 
+                        content={<CustomTooltip />} 
+                        cursor={{ fill: theme === 'dark' ? '#333' : '#6b7280', radius: 4 }}
+                        />
                         <Bar dataKey="tickets" fill="hsl(var(--primary-color))" radius={[0, 4, 4, 0]} />
                     </BarChart>
                 </ResponsiveContainer>

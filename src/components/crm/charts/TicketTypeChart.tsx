@@ -2,7 +2,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recha
 
 
 
-const COLORS = ['orange', 'blue', '#873e23', 'hsl(var(--primary-color))'];
+const COLORS = ['#9A3412', 'hsl(var(--light-primary-color))', '#991B1B', '#155E75'];
 
 
 
@@ -50,7 +50,12 @@ export default function TicketTypeChart({ tickets }: TicketTypeChartProps) {
                             dataKey="value"
                         >
                             {data.map((_, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} className='border-none' />
+                                <Cell
+                                    key={`cell-${index}`}
+                                    fill={COLORS[index % COLORS.length]}
+                                    stroke='none'
+                                    className='border border-border'
+                                />
                             ))}
                         </Pie>
                         <Tooltip content={<CustomTooltip />} />

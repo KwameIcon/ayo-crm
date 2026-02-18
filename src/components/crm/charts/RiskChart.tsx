@@ -4,9 +4,9 @@ import { useTheme } from '../ThemeContext';
 
 
 const COLORS = {
-    High: '#ef4444',
-    Medium: '#f59e0b',
-    Low: '#22c55e',
+    High: '#991B1B',
+    Medium: '#9A3412',
+    Low: '#155E75',
 };
 
 
@@ -52,7 +52,10 @@ export default function RiskChart({ tickets }: RiskChartProps) {
                             width={70}
                             tick={{ fill: theme === 'dark' ? '#94a3b8' : '#6b7280' }}
                         />
-                        <Tooltip content={<CustomTooltip />} />
+                        <Tooltip
+                            content={<CustomTooltip />}
+                            cursor={{ fill: theme === 'dark' ? '#333' : '#6b7280', radius: 4 }}
+                        />
                         <Bar dataKey="value" radius={[0, 4, 4, 0]}>
                             {data.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[entry.name as keyof typeof COLORS]} />

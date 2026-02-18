@@ -8,10 +8,10 @@ import type { Dispatch, SetStateAction } from 'react';
 
 
 const statusConfig = {
-    Open: { color: 'border-l-blue-500', bg: 'bg-container', headerBg: 'bg-container' },
-    Pending: { color: 'border-l-yellow-500', bg: 'bg-container', headerBg: 'bg-container' },
-    Escalated: { color: 'border-l-red-500', bg: 'bg-container', headerBg: 'bg-container' },
-    Resolved: { color: 'border-l-green-500', bg: 'bg-container', headerBg: 'bg-container' },
+    Open: { color: 'border-l-[#0E7490]', bg: 'bg-container', headerBg: 'bg-container' },
+    Pending: { color: 'border-l-[#854D0E]', bg: 'bg-container', headerBg: 'bg-container' },
+    Escalated: { color: 'border-l-[#6B21A8]', bg: 'bg-container', headerBg: 'bg-container' },
+    Resolved: { color: 'border-l-primary-color', bg: 'bg-container', headerBg: 'bg-container' },
 };
 
 
@@ -48,7 +48,7 @@ function KanbanCard({ ticket, onView, provided, isDragging }: KanbanCardProps) {
         >
             <div className="flex items-center gap-2">
                 {isResolved ? (
-                    <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-primary-color flex-shrink-0" />
                 ) : (
                     <Circle className="w-4 h-4 text-gray-300 dark:text-gray-600 flex-shrink-0" />
                 )}
@@ -64,7 +64,7 @@ function KanbanCard({ ticket, onView, provided, isDragging }: KanbanCardProps) {
                     className={cn(
                         'w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0',
                         displayName !== 'Unassigned'
-                            ? 'bg-[#2D6A4F]/10 text-[#2D6A4F]'
+                            ? 'bg-[#2D6A4F]/10 text-primary-color'
                             : 'bg-gray-100 dark:bg-slate-800 text-gray-400'
                     )}
                     title={displayName}

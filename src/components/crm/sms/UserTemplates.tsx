@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Edit, Trash2, FileText} from 'lucide-react';
+import { Edit, Trash2, FileText, Eye } from 'lucide-react';
 import TemplateModal from './TemplateModal';
 import {
     AlertDialog,
@@ -14,6 +14,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle
 } from '@/components/ui/alert-dialog';
+import TemplateDetailModal from './TemplateDetailModal';
 
 const initialUserTemplates = [
     {
@@ -44,7 +45,8 @@ const initialUserTemplates = [
 
 export default function UserTemplates() {
     const [templates, setTemplates] = useState(initialUserTemplates);
-    const [editingTemplate, setEditingTemplate] = useState(null);
+    const [editingTemplate, setEditingTemplate] = useState<any>(null);
+    const [viewingTemplate, setViewingTemplate] = useState<any>(null);
     const [deletingTemplate, setDeletingTemplate] = useState<any>(null);
 
     const handleSave = (updatedTemplate: any) => {
@@ -96,10 +98,16 @@ export default function UserTemplates() {
                                         <Button
                                             variant="outline"
                                             size="sm"
-                                            onClick={() => setEditingTemplate(template as any)}
+                                            onClick={() => setViewingTemplate(template)}
                                         >
-                                            <Edit className="w-4 h-4 mr-1" />
-                                            Edit
+                                            <Eye className="w-4 h-4" />
+                                        </Button>
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => setEditingTemplate(template)}
+                                        >
+                                            <Edit className="w-4 h-4" />
                                         </Button>
                                         <Button
                                             variant="outline"
@@ -144,6 +152,13 @@ export default function UserTemplates() {
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
+
+            <TemplateDetailModal
+                template={viewingTemplate}
+                type="system"
+                open={!!viewingTemplate}
+                onClose={() => setViewingTemplate(null)}
+            />
         </div>
     );
 }

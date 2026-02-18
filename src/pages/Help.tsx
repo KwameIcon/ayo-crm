@@ -58,7 +58,7 @@ export default function Help() {
             <Card className='crm-bg-border'>
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                        <HelpCircle className="w-5 h-5 text-[#2D6A4F]" />
+                        <HelpCircle className="w-5 h-5 text-primary-color" />
                         Frequently Asked Questions
                     </CardTitle>
                     <CardDescription>Quick answers to common questions</CardDescription>
@@ -74,7 +74,7 @@ export default function Help() {
                             {filteredFaqs.map((category, idx) => (
                                 <div key={idx}>
                                     <div className="flex items-center gap-2 mb-3">
-                                        <category.icon className="w-4 h-4 text-[#2D6A4F]" />
+                                        <category.icon className="w-4 h-4 text-primary-color" />
                                         <h3 className="font-semibold text-gray-900 dark:text-white">{category.category}</h3>
                                     </div>
                                     <Accordion type="single" collapsible className="border rounded-lg">

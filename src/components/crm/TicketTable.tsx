@@ -14,16 +14,16 @@ import { cn } from '@/lib/utils';
 
 
 const statusColors = {
-    Open: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
-    Pending: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
-    Escalated: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
-    Resolved: 'bg-[#00959c]/20 text-[#00959c]',
+    Open: 'open-bg',
+    Pending: 'pending-bg',
+    Escalated: 'escalated-bg',
+    Resolved: 'resolved-bg',
 };
 
 const riskColors = {
-    High: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
-    Medium: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400',
-    Low: 'bg-[#00959c]/20 text-[#00959c]',
+    High: 'danger-bg',
+    Medium: 'warning-bg',
+    Low: 'low-bg',
 };
 
 

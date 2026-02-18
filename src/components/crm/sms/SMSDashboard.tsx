@@ -7,25 +7,27 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { MessageSquare, Search, Calendar as CalendarIcon, CheckCircle, Send, Clock, XCircle, X, Bot, User } from 'lucide-react';
+import { MessageSquare, Search, Calendar as CalendarIcon, Send, X, Bot, User } from 'lucide-react';
 import StatCard from '@/components/crm/StatCard';
 import SendSMSModal from '@/components/crm/SendSMSModal';
 import { mockSMS } from '@/components/crm/mockData';
 import { cn } from '@/lib/utils';
 import type { DateRange } from 'react-day-picker';
 import CrmButton from '@/components/commons/CrmButton';
+import SMSDetailModal from './SMSDetailModal';
 
 const statusConfig = {
-    delivered: { icon: CheckCircle, color: 'text-green-600', bg: 'bg-light-primary-color text-primary-color' },
-    sent: { icon: Send, color: 'text-blue-600', bg: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' },
-    pending: { icon: Clock, color: 'text-yellow-600', bg: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' },
-    failed: { icon: XCircle, color: 'text-red-600', bg: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' },
+    delivered: { color: 'resolved-bg' },
+    sent: { color: 'open-bg' },
+    pending: { color: 'pending-bg' },
+    failed: { color: 'danger-bg' },
 };
 
 export default function SMSDashboard() {
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
     const [typeFilter, setTypeFilter] = useState('all');
+    const [selectedSMS, setSelectedSMS] = useState<any>(null);
     const [dateRange, setDateRange] = useState<DateRange | undefined>({
         from: undefined,
         to: undefined,
@@ -202,9 +204,8 @@ export default function SMSDashboard() {
                             </TableRow>
                         ) : (
                             filteredSMS.slice(0, 50).map(sms => {
-                                const StatusIcon = statusConfig[sms.status as keyof typeof statusConfig].icon;
                                 return (
-                                    <TableRow key={sms.id} className="hover:bg-gray-50 dark:hover:bg-slate-800">
+                                    <TableRow key={sms.id} className="cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-800" onClick={() => setSelectedSMS(sms)}>
                                         <TableCell>
                                             <div>
                                                 <p className="font-medium text-gray-900 dark:text-white">{sms.recipient_name}</p>
@@ -224,8 +225,7 @@ export default function SMSDashboard() {
                                             <span className="text-sm font-mono text-primary-color">{sms.ticket_id}</span>
                                         </TableCell>
                                         <TableCell>
-                                            <Badge className={cn('flex items-center gap-1 w-fit', statusConfig[sms.status as keyof typeof statusConfig].bg)}>
-                                                <StatusIcon className="w-3 h-3" />
+                                            <Badge className={cn('w-16 flex items-center justify-center gap-1', statusConfig[sms.status as keyof typeof statusConfig].color)}>
                                                 {sms.status}
                                             </Badge>
                                         </TableCell>
@@ -249,6 +249,12 @@ export default function SMSDashboard() {
                 }}
                 recipient={{ name: '', phone: '' }}
                 ticketId=""
+            />
+
+            <SMSDetailModal
+                sms={selectedSMS}
+                open={!!selectedSMS}
+                onClose={() => setSelectedSMS(null)}
             />
         </div>
     );

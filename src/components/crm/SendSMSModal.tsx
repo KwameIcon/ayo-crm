@@ -72,7 +72,7 @@ export default function SendSMSModal({ open, onClose, onSend, recipient, ticketI
             <DialogContent className="max-w-md crm-bg-border">
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2">
-                        <Send className="w-5 h-5 text-[#2D6A4F]" />
+                        <Send className="w-5 h-5 text-primary-color" />
                         Send SMS
                     </DialogTitle>
                 </DialogHeader>
