@@ -16,16 +16,23 @@ type LayoutProps = {
 
 export default function Layout({ children }: LayoutProps) {
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
 
     return (
         <ThemeProvider>
             <div className="min-h-screen bg-background transition-colors duration-300">
-                <Sidebar collapsed={sidebarCollapsed} setCollapsed={setSidebarCollapsed} />
-                <Topbar sidebarCollapsed={sidebarCollapsed} />
+                <Sidebar
+                    mobileOpen={mobileOpen}
+                    setMobileOpen={setMobileOpen}
+                    collapsed={sidebarCollapsed}
+                    setCollapsed={setSidebarCollapsed}
+                />
+                <Topbar sidebarCollapsed={sidebarCollapsed} onMenuClick={() => setMobileOpen(true)} />
                 <main
                     className={cn(
-                        'pt-20 pb-6 px-6 transition-all duration-300',
-                        sidebarCollapsed ? 'ml-16' : 'ml-64'
+                        'pt-20 pb-6 px-4 md:px-6 transition-all duration-300',
+                        'ml-0 md:ml-auto',
+                        sidebarCollapsed ? 'md:ml-16' : 'md:ml-64'
                     )}
                 >
                     <div className="max-w-7xl mx-auto">

@@ -1,5 +1,5 @@
 import { useTheme } from './ThemeContext';
-import { Sun, Moon, Shield, User, Bell, Search } from 'lucide-react';
+import { Sun, Moon, Shield, User, Bell, Search, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -19,11 +19,12 @@ import GlobalSearchModal from './GlobalSearchModal';
 
 type TopbarProps = {
     sidebarCollapsed: boolean;
+    onMenuClick: () => void
 }
 
 
 
-export default function Topbar({ sidebarCollapsed }: TopbarProps) {
+export default function Topbar({ sidebarCollapsed, onMenuClick }: TopbarProps) {
     const { theme, toggleTheme, role, toggleRole } = useTheme();
     const [showSearch, setShowSearch] = useState(false);
 
@@ -32,12 +33,22 @@ export default function Topbar({ sidebarCollapsed }: TopbarProps) {
             <header
                 className={cn(
                     'fixed top-0 right-0 z-30 h-16 transition-all duration-300',
-                    'crm-bg-border backdrop-blur-md',
-                    'border-b border-border',
-                    sidebarCollapsed ? 'left-16' : 'left-64'
+                    ' backdrop-blur-md crm-bg-border',
+                    'left-0 md:left-auto',
+                    sidebarCollapsed ? 'md:left-16' : 'md:left-64'
                 )}
             >
                 <div className="flex items-center justify-between h-full px-6">
+                    {/* Mobile Menu Toggle */}
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="md:hidden text-gray-600 dark:text-gray-400"
+                        onClick={onMenuClick}
+                    >
+                        <Menu className="w-5 h-5" />
+                    </Button>
+
                     {/* Search */}
                     <div
                         className="relative w-96 hidden md:block cursor-pointer"

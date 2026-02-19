@@ -175,7 +175,7 @@ export default function SMSDashboard() {
                         </Button>
                     )}
 
-                    <CrmButton onClick={() => setShowSendModal(true)} className="ml-auto">
+                    <CrmButton onClick={() => setShowSendModal(true)} className="flex-1 md:flex-auto ml-auto">
                         <Send className="w-4 h-4 mr-2" />
                         Send SMS
                     </CrmButton>

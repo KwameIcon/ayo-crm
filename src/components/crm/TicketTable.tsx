@@ -58,32 +58,32 @@ export default function TicketTable({ tickets, onTicketClick }: TicketTableProps
                             onClick={() => onTicketClick(ticket)}
                             className="cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors"
                         >
-                            <TableCell className="font-medium text-primary-color">
+                            <TableCell className="font-medium text-primary-color whitespace-nowrap">
                                 {ticket.ticket_id}
                             </TableCell>
-                            <TableCell>
+                            <TableCell className='whitespace-nowrap'>
                                 <div>
                                     <p className="font-medium text-gray-900 dark:text-white">{ticket.customer_name}</p>
                                     <p className="text-sm text-gray-500 dark:text-gray-400">{ticket.contact_number}</p>
                                 </div>
                             </TableCell>
-                            <TableCell>
+                            <TableCell className = 'whitespace-nowrap'>
                                 <span className="text-gray-700 dark:text-gray-300">{ticket.channel}</span>
                             </TableCell>
-                            <TableCell>
+                            <TableCell className = 'whitespace-nowrap'>
                                 <span className="text-gray-700 dark:text-gray-300 text-sm">{ticket.category}</span>
                             </TableCell>
-                            <TableCell>
+                            <TableCell className = 'whitespace-nowrap'>
                                 <Badge className={cn('font-medium w-16 flex items-center justify-center', riskColors[ticket.risk_level as keyof typeof riskColors])}>
                                     {ticket.risk_level}
                                 </Badge>
                             </TableCell>
-                            <TableCell>
+                            <TableCell className = 'whitespace-nowrap'>
                                 <Badge className={cn('font-medium w-16 flex items-center justify-center', statusColors[ticket.status as keyof typeof statusColors])}>
                                     {ticket.status}
                                 </Badge>
                             </TableCell>
-                            <TableCell>
+                            <TableCell className = 'whitespace-nowrap'>
                                 {ticket.assigned_to_name ? (
                                     <div className="flex items-center gap-2">
                                         <div className="w-7 h-7 rounded-full bg-[#2D6A4F]/10 flex items-center justify-center">
@@ -102,7 +102,7 @@ export default function TicketTable({ tickets, onTicketClick }: TicketTableProps
                                     </div>
                                 )}
                             </TableCell>
-                            <TableCell>
+                            <TableCell className='whitespace-nowrap'>
                                 <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
                                     <Clock className="w-4 h-4" />
                                     <span className="text-sm">
