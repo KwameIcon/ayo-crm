@@ -87,7 +87,7 @@ export default function UserTemplates() {
                                 </div>
                             </CardHeader>
                             <CardContent>
-                                <p className="text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-slate-800 rounded-lg p-3 font-mono">
+                                <p className="text-sm text-gray-600 dark:text-gray-400 bg-background rounded-lg p-3 font-mono">
                                     {template.message}
                                 </p>
                                 <div className="flex items-center justify-between mt-3">

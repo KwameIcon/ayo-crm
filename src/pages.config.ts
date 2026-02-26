@@ -57,6 +57,8 @@ const Products = lazy(() => import('./pages/Products'));
 const SMS = lazy(() => import('./pages/SMS'));
 const Settings = lazy(() => import('./pages/Settings'));
 const Help = lazy(() => import('./pages/Help'));
+const AdminConfiguration = lazy(() => import('./pages/AdminConfiguration'));
+
 
 export const PAGES = {
     "Dashboard": Dashboard,
@@ -66,6 +68,7 @@ export const PAGES = {
     "SMS": SMS,
     "Settings": Settings,
     "Help": Help,
+    "AdminConfiguration": AdminConfiguration
 }
 
 export const pagesConfig = {

@@ -1,14 +1,7 @@
 import { formatDistanceToNow } from 'date-fns';
 import { AlertCircle, Clock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 
 

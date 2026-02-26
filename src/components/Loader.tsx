@@ -1,5 +1,3 @@
-// Page Loading Spinner component
-
 
 export default function Loader() {
     return (

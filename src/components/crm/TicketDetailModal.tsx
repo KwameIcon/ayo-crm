@@ -11,6 +11,7 @@ import CommentSection from './CommentSection';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { statuses } from './mockData';
 import SMSTab from './tabs/SMSTab';
+import { DialogTrigger } from '@radix-ui/react-dialog';
 
 
 const statusColors = {
@@ -30,14 +31,13 @@ const riskColors = {
 
 type TicketDetailModalProps = {
     ticket: any;
-    open: boolean;
-    onClose: () => void
     onStatusChange?: (ticket: any, status: string) => void
+    children: React.ReactNode
 }
 
 
 
-export default function TicketDetailModal({ ticket, open, onClose, onStatusChange }: TicketDetailModalProps) {
+export default function TicketDetailModal({ ticket, onStatusChange, children }: TicketDetailModalProps) {
     const [activeTab, setActiveTab] = useState('details');
     const [currentStatus, setCurrentStatus] = useState(ticket?.status);
 
@@ -52,7 +52,10 @@ export default function TicketDetailModal({ ticket, open, onClose, onStatusChang
     if (!ticket) return null;
 
     return (
-        <Dialog open={open} onOpenChange={onClose}>
+        <Dialog>
+            <DialogTrigger>
+                {children}
+            </DialogTrigger>
             <DialogContent className="max-w-3xl max-h-[90vh] overflow-hidden p-0 bg-container">
                 <DialogHeader className="px-6 py-4 border-b border-border">
                     <div className="flex items-center justify-between">

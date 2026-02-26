@@ -1,12 +1,11 @@
 import { useState, useMemo } from 'react';
 import { List, LayoutGrid } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import TicketFilters from '@/components/crm/TicketFilters';
-import TicketTable from '@/components/crm/TicketTable';
 import KanbanBoard from '@/components/crm/KanbanBoard';
-import TicketDetailModal from '@/components/crm/TicketDetailModal';
 import CreateTicketModal from '@/components/crm/createTicketModal/CreateTicketModal';
-import { mockTickets } from '@/components/crm/mockData';
+import { channels, MockSpecifics, mockTickets, personnel, products } from '@/components/crm/mockData';
+import { Actions, AssignTo, Customer, RiskBadge, StatusBadge } from '@/lib/commons';
+import CrmTable from '@/components/Table';
 
 
 export default function AllTickets() {
@@ -77,22 +76,97 @@ export default function AllTickets() {
                     </div>
                 </div>
 
-                {/* Filters */}
-                <TicketFilters filters={filters} setFilters={setFilters} />
-
                 {/* Content */}
                 {view === 'table' ? (
-                    <TicketTable tickets={filteredTickets} onTicketClick={setSelectedTicket} />
+                    <CrmTable
+                        data={mockTickets}
+                        isFiltering
+                        isPaginated={true}
+                        header={{
+                            title: 'Tickets',
+                            resultCount: tickets.length,
+                            button: null,
+                            searchPlaceholder: 'Search a ticket',
+                            filters: [
+                                {
+                                    key: 'ticket_id',
+                                    label: 'Ticket ID',
+                                    type: 'input',
+                                },
+                                {
+                                    key: 'customer',
+                                    label: 'Customer',
+                                    type: 'select',
+                                    options: [...personnel.map((p) => p.name)]
+                                },
+                                {
+                                    key: 'product',
+                                    label: 'Product',
+                                    type: 'select',
+                                    options: [...products.map(product => product.name)],
+                                },
+                                {
+                                    key: 'Channel',
+                                    label: 'Channel',
+                                    type: 'select',
+                                    options: channels,
+                                },
+                                {
+                                    key: 'specifics',
+                                    label: 'Specifics',
+                                    type: 'select',
+                                    options: [...MockSpecifics],
+                                },
+                                {
+                                    key: 'assignee',
+                                    label: 'Assignee',
+                                    type: "select",
+                                    options: [...personnel.map((p) => p.name)]
+                                },
+                                {
+                                    key: "created_by",
+                                    label: "Created By",
+                                    type: "select",
+                                    options: [...personnel.map((p) => p.name)]
+                                },
+                                {
+                                    key: "risk_level",
+                                    label: "Risk Level",
+                                    type: "select",
+                                    options: ["High", "Medium", "Low"]
+                                },
+                                {
+                                    key: 'status',
+                                    label: 'Status',
+                                    type: 'select',
+                                    options: ['Open', 'Resolved', 'Pending', 'Escalated'],
+                                }
+                            ]
+                        }}
+                        columns={[
+                            {
+                                key: 'ticket_id', header: 'Ticket ID', render: (item: any) =>
+                                    <p className="font-medium text-primary-color whitespace-nowrap">
+                                        {item.ticket_id}
+                                    </p>
+                            },
+                            { key: 'customer', header: 'Customer', render: (item: any) => <Customer name={item.customer_name} contact_number={item.contact_number} /> },
+                            { key: 'product_name', header: 'Product' },
+                            { key: 'channel', header: 'Channel' },
+                            // { key: 'specifics', header: 'Specifics' },
+                            { key: 'assignee', header: 'Assignee', render: (item: any) => <AssignTo ticket={item} /> },
+                            // { key: 'created_by', header: 'Created By', render: (item: any) => <CreatedBy ticket={item} /> },
+                            { key: 'risk_level', header: 'Risk Level', render: (item: any) => <RiskBadge risk={item.risk_level} /> },
+                            { key: 'status', header: 'Status', render: (item: any) => <StatusBadge status={item.status} /> },
+                            { key: 'created_date', header: 'Created At' },
+                            { key: 'actions', header: 'Actions', render: (item: any) => <Actions ticket={item} /> },
+                        ]}
+                    />
                 ) : (
                     <KanbanBoard tickets={filteredTickets} onTicketClick={setSelectedTicket} onStatusChange={handleStatusChange} />
                 )}
             </div>
 
-            <TicketDetailModal
-                ticket={selectedTicket}
-                open={!!selectedTicket}
-                onClose={() => setSelectedTicket(null)}
-            />
         </>
     );
 }

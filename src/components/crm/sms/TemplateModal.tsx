@@ -12,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Save, GripVertical } from 'lucide-react';
 import CrmButton from '@/components/commons/CrmButton';
+import CrmAlert from '@/components/commons/Alert';
 
 const availableVariables = [
     { key: 'customer_name', label: 'Customer Name' },
@@ -110,14 +111,14 @@ export default function TemplateModal({ open, onClose, onSave, template, mode, t
 
     return (
         <Dialog open={open} onOpenChange={onClose}>
-            <DialogContent className="max-w-2xl crm-bg-border">
+            <DialogContent className="max-w-2xl h-[95vh] md:h-auto crm-bg-border overflow-y-scroll">
                 <DialogHeader>
                     <DialogTitle>
                         {mode === 'create' ? 'Create Template' : isSystemEdit ? 'Edit System Template' : 'Edit Template'}
                     </DialogTitle>
                 </DialogHeader>
 
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="col-span-2 space-y-4">
                         {!isSystemEdit && (
                             <>
@@ -141,11 +142,13 @@ export default function TemplateModal({ open, onClose, onSave, template, mode, t
                         )}
 
                         {isSystemEdit && (
-                            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3">
-                                <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                                    Editing system template: <strong>{template?.name}</strong>
-                                </p>
-                            </div>
+                            // <CrmAlert msg= {"Editing system template: " + <strong>{template?.name}</strong>} />
+                            <CrmAlert msg={
+                                <>
+                                    Editing system template:{" "}
+                                    <strong className='text-primary-color'>{template?.name}</strong>
+                                </>}
+                            />
                         )}
 
                         <div className="space-y-2">
@@ -176,7 +179,7 @@ export default function TemplateModal({ open, onClose, onSave, template, mode, t
                                     draggable
                                     onDragStart={(e) => handleDragStart(e, variable)}
                                     onClick={() => insertVariable(variable)}
-                                    className="flex items-center gap-2 p-2 bg-gray-50 dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 cursor-grab active:cursor-grabbing hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+                                    className="flex items-center gap-2 p-2 bg-background cursor-grab active:cursor-grabbing hover:bg-accent transition-colors"
                                 >
                                     <GripVertical className="w-3 h-3 text-gray-400" />
                                     <span className="text-xs font-mono text-[#2D6A4F]">{'{{' + variable.key + '}}'}</span>

@@ -4,6 +4,7 @@ import Sidebar from '@/components/crm/Sidebar';
 import Topbar from '@/components/crm/Topbar';
 import { cn } from '@/lib/utils';
 import Loader from './components/Loader';
+import Footer from './components/Footer';
 
 
 
@@ -30,9 +31,10 @@ export default function Layout({ children }: LayoutProps) {
                 <Topbar sidebarCollapsed={sidebarCollapsed} onMenuClick={() => setMobileOpen(true)} />
                 <main
                     className={cn(
-                        'pt-20 pb-6 px-4 md:px-6 transition-all duration-300',
+                        'pt-20 pb-24 px-4 md:px-6 transition-all duration-300',
                         'ml-0 md:ml-auto',
-                        sidebarCollapsed ? 'md:ml-16' : 'md:ml-64'
+                        sidebarCollapsed ? 'md:ml-16' : 'md:ml-64',
+                        'min-h-screen relative overflow-x-hidden'
                     )}
                 >
                     <div className="max-w-7xl mx-auto">
@@ -40,6 +42,7 @@ export default function Layout({ children }: LayoutProps) {
                             {children}
                         </Suspense>
                     </div>
+                <Footer />
                 </main>
             </div>
         </ThemeProvider>

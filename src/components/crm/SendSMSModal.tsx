@@ -13,6 +13,10 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Send, User, Phone, MessageSquare } from 'lucide-react';
 import CrmButton from '../commons/CrmButton';
+import { SearchableSelect } from '../commons/SearchableSelect';
+import { personnel } from './mockData';
+
+
 
 const templates = [
     { id: 'custom', label: 'Custom Message', message: '' },
@@ -28,7 +32,7 @@ type SendSMSModalProps = {
     open: boolean;
     onClose: () => void;
     onSend: (data: any) => void;
-    recipient: any;
+    recipient?: any;
     ticketId: string;
 };
 
@@ -67,9 +71,10 @@ export default function SendSMSModal({ open, onClose, onSend, recipient, ticketI
     const charCount = message.length;
     const smsCount = Math.ceil(charCount / 160) || 1;
 
+    
     return (
         <Dialog open={open} onOpenChange={onClose}>
-            <DialogContent className="max-w-md crm-bg-border">
+            <DialogContent className="max-w-md crm-bg-border space-y-6">
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2">
                         <Send className="w-5 h-5 text-primary-color" />
@@ -79,15 +84,24 @@ export default function SendSMSModal({ open, onClose, onSend, recipient, ticketI
 
                 <div className="space-y-4">
                     <div className="space-y-2">
-                        <Label className="flex items-center gap-2">
+                        <Label className="flex items-center gap-2 text-muted-foreground">
                             <User className="w-4 h-4" />
                             Recipient
                         </Label>
-                        <Input value={recipient?.name || ''} disabled className="bg-gray-50 dark:bg-slate-800" />
+                        {recipient && <Input value={recipient?.name || ''} disabled className="bg-gray-50 dark:bg-slate-800" />}
+                        {
+                            !recipient && (
+                                <SearchableSelect
+                                    value={phone}
+                                    setValue={setPhone}
+                                    options={personnel.map((p: any) => ({ label: p.name, value: p.phone }))}
+                                />
+                            )
+                        }
                     </div>
 
                     <div className="space-y-2">
-                        <Label className="flex items-center gap-2">
+                        <Label className="flex items-center gap-2 text-muted-foreground">
                             <Phone className="w-4 h-4" />
                             Phone Number
                         </Label>
@@ -115,7 +129,7 @@ export default function SendSMSModal({ open, onClose, onSend, recipient, ticketI
                     </div>
 
                     <div className="space-y-2">
-                        <Label className="flex items-center gap-2">
+                        <Label className="flex items-center gap-2 text-muted-foreground">
                             <MessageSquare className="w-4 h-4" />
                             Message
                         </Label>
@@ -124,6 +138,8 @@ export default function SendSMSModal({ open, onClose, onSend, recipient, ticketI
                             onChange={(e) => setMessage(e.target.value)}
                             placeholder="Type your message..."
                             className="h-32 resize-none"
+                            // Restrict input to 160 characters
+                            maxLength={160}
                         />
                         <div className="flex justify-between text-xs text-gray-500">
                             <span>{charCount} characters</span>

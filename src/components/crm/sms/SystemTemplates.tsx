@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { Edit, TicketPlus, RefreshCw, CheckCircle, AlertCircle, Eye } from 'lucide-react';
 import TemplateModal from './TemplateModal';
 import TemplateDetailModal from './TemplateDetailModal';
+import CrmAlert from '@/components/commons/Alert';
+
 
 const systemTemplates = [
     {
@@ -21,7 +23,7 @@ const systemTemplates = [
         name: 'Status: Pending',
         trigger: 'When ticket status changes to Pending',
         icon: RefreshCw,
-        color: 'pending-bg',
+        color: 'open-bg',
         message: 'Hi {{customer_name}}, your ticket #{{ticket_id}} is now pending. We are awaiting {{pending_reason}}. Please respond at your earliest convenience.',
         active: true,
     },
@@ -30,7 +32,7 @@ const systemTemplates = [
         name: 'Status: Escalated',
         trigger: 'When ticket status changes to Escalated',
         icon: AlertCircle,
-        color: 'escalated-bg',
+        color: 'open-bg',
         message: 'Dear {{customer_name}}, your ticket #{{ticket_id}} has been escalated for priority handling. A senior agent will contact you within {{sla_time}}.',
         active: true,
     },
@@ -39,7 +41,7 @@ const systemTemplates = [
         name: 'Status: Resolved',
         trigger: 'When ticket status changes to Resolved',
         icon: CheckCircle,
-        color: 'resolved-bg',
+        color: 'open-bg',
         message: 'Dear {{customer_name}}, great news! Your ticket #{{ticket_id}} has been resolved. {{resolution_summary}}. Thank you for choosing Ayo InsureTech!',
         active: true,
     },
@@ -59,11 +61,10 @@ export default function SystemTemplates() {
 
     return (
         <div className="space-y-7">
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                <p className="text-sm text-blue-700 dark:text-blue-300">
-                    System templates are automatically sent based on ticket actions. You can customize the message content but cannot create or delete these templates.
-                </p>
-            </div>
+            
+            <CrmAlert
+                msg="System templates are automatically sent based on ticket actions. You can customize the message content but cannot create or delete these templates."
+            />
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {templates.map(template => (
@@ -85,7 +86,7 @@ export default function SystemTemplates() {
                             </div>
                         </CardHeader>
                         <CardContent>
-                            <p className="text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-slate-800 rounded-lg p-3 font-mono">
+                            <p className="text-sm text-gray-600 bg-background crm-border rounded-lg p-3 font-mono">
                                 {template.message}
                             </p>
                             <div className="flex gap-2 mt-3">

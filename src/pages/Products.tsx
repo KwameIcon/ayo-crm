@@ -1,11 +1,10 @@
-import { useState, useMemo } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useMemo } from 'react';
 import { useTheme } from '@/components/crm/ThemeContext';
-import { mockTickets, products } from '@/components/crm/mockData';
+import { channels, MockSpecifics, mockTickets, personnel, products } from '@/components/crm/mockData';
 import StatCard from '@/components/crm/StatCard';
-import TicketTable from '@/components/crm/TicketTable';
-import TicketDetailModal from '@/components/crm/TicketDetailModal';
-import { Package, Car, Shield, Users, Smartphone, Heart } from 'lucide-react';
+import { Package, Car, Shield, Users, Smartphone, Heart} from 'lucide-react';
+import CrmTable from '@/components/Table';
+import { Actions, AssignTo, Customer, RiskBadge, StatusBadge } from '@/lib/commons';
 
 const productIcons = {
     pay_n_drive: Car,
@@ -17,30 +16,9 @@ const productIcons = {
 
 export default function Products() {
     const { role } = useTheme();
-    const [selectedProduct, setSelectedProduct] = useState('all');
-    const [selectedType, setSelectedType] = useState('all');
-    const [selectedTicket, setSelectedTicket] = useState(null);
 
     const tickets = mockTickets;
 
-    // Get available types for selected product
-    const availableTypes = useMemo(() => {
-        if (selectedProduct === 'all') return [];
-        const product = products.find(p => p.id === selectedProduct);
-        return product?.types || [];
-    }, [selectedProduct]);
-
-    // Filter tickets based on selection
-    const filteredTickets = useMemo(() => {
-        let result = tickets;
-        if (selectedProduct !== 'all') {
-            result = result.filter(t => t.product_id === selectedProduct);
-        }
-        if (selectedType !== 'all') {
-            result = result.filter(t => t.product_type === selectedType);
-        }
-        return result;
-    }, [tickets, selectedProduct, selectedType]);
 
     // Calculate product stats
     const stats = useMemo(() => {
@@ -57,11 +35,6 @@ export default function Products() {
         return productStats;
     }, [tickets]);
 
-    // Reset type when product changes
-    const handleProductChange = (value: string) => {
-        setSelectedProduct(value);
-        setSelectedType('all');
-    };
 
     return (
         <div className="space-y-6">
@@ -88,53 +61,97 @@ export default function Products() {
                 ))}
             </div>
 
-            {/* Product & Type Filters */}
-            <div className="crm-bg-border rounded-xl p-4">
-                <div className="flex flex-wrap gap-4">
-                    <Select value={selectedProduct} onValueChange={handleProductChange}>
-                        <SelectTrigger className="w-[220px]">
-                            <Package className="w-4 h-4 mr-2 text-[#2D6A4F]" />
-                            <SelectValue placeholder="Select Product" />
-                        </SelectTrigger>
-                        <SelectContent className='crm-bg-border'>
-                            <SelectItem value="all">All Products</SelectItem>
-                            {products.map(product => (
-                                <SelectItem key={product.id} value={product.id}>{product.name}</SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-
-                    {selectedProduct !== 'all' && availableTypes.length > 0 && (
-                        <Select value={selectedType} onValueChange={setSelectedType}>
-                            <SelectTrigger className="w-[220px]">
-                                <SelectValue placeholder="Select Type" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">All Types</SelectItem>
-                                {availableTypes.map(type => (
-                                    <SelectItem key={type} value={type}>{type}</SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                    )}
-
-                    <div className="ml-auto text-sm text-gray-500 dark:text-gray-400 self-center">
-                        {filteredTickets.length} ticket{filteredTickets.length !== 1 ? 's' : ''} found
-                    </div>
-                </div>
-            </div>
-
             {/* Tickets Table */}
-            <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-700 overflow-hidden">
-                <TicketTable tickets={filteredTickets} onTicketClick={setSelectedTicket} />
-            </div>
-
-            {/* Ticket Detail Modal */}
-            <TicketDetailModal
-                ticket={selectedTicket}
-                open={!!selectedTicket}
-                onClose={() => setSelectedTicket(null)}
+            <CrmTable
+                data={tickets}
+                isFiltering
+                isPaginated={true}
+                header={{
+                    title: 'Tickets',
+                    resultCount: tickets.length,
+                    button: null,
+                    searchPlaceholder: 'Search a ticket',
+                    filters: [
+                        {
+                            key: 'ticket_id',
+                            label: 'Ticket ID',
+                            type: 'input',
+                        },
+                        {
+                            key: 'customer',
+                            label: 'Customer',
+                            type: 'select',
+                            options: [...personnel.map((p) => p.name)]
+                        },
+                        {
+                            key: 'product',
+                            label: 'Product',
+                            type: 'select',
+                            options: [...products.map(product => product.name)],
+                        },
+                        {
+                            key: 'Channel',
+                            label: 'Channel',
+                            type: 'select',
+                            options: channels,
+                        },
+                        {
+                            key: 'specifics',
+                            label: 'Specifics',
+                            type: 'select',
+                            options: [...MockSpecifics],
+                        },
+                        {
+                            key: 'assignee',
+                            label: 'Assignee',
+                            type: "select",
+                            options: [...personnel.map((p) => p.name)]
+                        },
+                        {
+                            key: "created_by",
+                            label: "Created By",
+                            type: "select",
+                            options: [...personnel.map((p) => p.name)]
+                        },
+                        {
+                            key: "risk_level",
+                            label: "Risk Level",
+                            type: "select",
+                            options: ["High", "Medium", "Low"]
+                        },
+                        {
+                            key: 'status',
+                            label: 'Status',
+                            type: 'select',
+                            options: ['Open', 'Resolved', 'Pending', 'Escalated'],
+                        }
+                    ]
+                }}
+                columns={[
+                    {
+                        key: 'ticket_id', header: 'Ticket ID', render: (item: any) =>
+                            <p className="font-medium text-primary-color whitespace-nowrap">
+                                {item.ticket_id}
+                            </p>
+                    },
+                    { key: 'customer', header: 'Customer', render: (item: any) => <Customer name={item.customer_name} contact_number={item.contact_number} /> },
+                    { key: 'product_name', header: 'Product' },
+                    { key: 'channel', header: 'Channel' },
+                    // { key: 'specifics', header: 'Specifics' },
+                    { key: 'assignee', header: 'Assignee', render: (item: any) => <AssignTo ticket={item} /> },
+                    // { key: 'created_by', header: 'Created By', render: (item: any) => <CreatedBy ticket={item} /> },
+                    { key: 'risk_level', header: 'Risk Level', render: (item: any) => <RiskBadge risk={item.risk_level} /> },
+                    { key: 'status', header: 'Status', render: (item: any) => <StatusBadge status={item.status} /> },
+                    { key: 'created_date', header: 'Created At' },
+                    { key: 'actions', header: 'Actions', render: (item: any) => <Actions ticket={item} /> },
+                ]}
             />
+
+
         </div>
     );
 }
+
+
+
+

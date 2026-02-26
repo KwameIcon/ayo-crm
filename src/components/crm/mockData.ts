@@ -87,7 +87,7 @@ export const generateMockTickets = () => {
   const tickets = [];
   const now = new Date();
 
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 10; i++) {
     const customer = customers[Math.floor(Math.random() * customers.length)];
     const daysAgo = Math.floor(Math.random() * 30);
     const createdAt = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000);
@@ -119,7 +119,7 @@ export const generateMockTickets = () => {
       specifics: productType,
       description: descriptions[Math.floor(Math.random() * descriptions.length)],
       created_by: personnel[Math.floor(Math.random() * personnel.length)].name,
-      created_date: createdAt.toISOString(),
+      created_date: createdAt.toLocaleString(),
       resolved_at: status === 'Resolved' ? new Date(createdAt.getTime() + Math.random() * 5 * 24 * 60 * 60 * 1000).toISOString() : null,
     });
   }
@@ -231,6 +231,8 @@ export const generateMockSMS = () => {
 
 export const mockSMS = generateMockSMS();
 
+
+export const MockSpecifics = ["Enquiries", "Policy Information", "Payments and Premiums", "Claims", "Family Member / Beneficiary"];
 
 
 export const specifics = [

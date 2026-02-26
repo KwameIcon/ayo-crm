@@ -57,6 +57,12 @@
   color: hsl(var(--primary-color));
 }
 
+.alert-bg{
+  background-color: #FEE2E2;
+  border: 1px solid #991B1B;
+  color: #991B1B;
+}
+
 
 /* Scrollbar color and background */
 ::-webkit-scrollbar {
@@ -76,6 +82,11 @@
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+
+:root {
+  --yellow: #d07d00;
 }
 
 
@@ -131,6 +142,9 @@
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;
     --primary: 0 0% 98%;
+
+    --yellow: #d07d00;
+
     --primary-color: 183, 100%, 31%;
     --light-primary-color: 183 100% 85%;
     --accent-deep: 183 100% 15%;

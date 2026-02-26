@@ -24,7 +24,7 @@ export function SearchableSelect({ value, setValue, options }: SearchableSelectP
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
+            <PopoverTrigger asChild className="">
                 <Button
                     variant="outline"
                     role="combobox"
@@ -37,8 +37,8 @@ export function SearchableSelect({ value, setValue, options }: SearchableSelectP
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-full h-[200px] p-0">
-                <Command className="crm-bg-border" >
+            <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 max-h-[300px] bg-background" asChild>
+                <Command className="" >
                     <CommandInput placeholder="Search option..."/>
                     <CommandList >
                         <CommandEmpty>No results found.</CommandEmpty>

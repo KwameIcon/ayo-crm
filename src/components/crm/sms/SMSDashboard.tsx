@@ -2,19 +2,19 @@ import { useState, useMemo } from 'react';
 import { format } from 'date-fns';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { MessageSquare, Search, Calendar as CalendarIcon, Send, X, Bot, User } from 'lucide-react';
+import { MessageSquare, Search, Calendar as CalendarIcon, Send, X, Bot, User, MoreVertical } from 'lucide-react';
 import StatCard from '@/components/crm/StatCard';
 import SendSMSModal from '@/components/crm/SendSMSModal';
-import { mockSMS } from '@/components/crm/mockData';
-import { cn } from '@/lib/utils';
+import { channels, mockSMS, personnel } from '@/components/crm/mockData';
 import type { DateRange } from 'react-day-picker';
 import CrmButton from '@/components/commons/CrmButton';
 import SMSDetailModal from './SMSDetailModal';
+import CrmTable from '@/components/Table';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 const statusConfig = {
     delivered: { color: 'resolved-bg' },
@@ -184,60 +184,74 @@ export default function SMSDashboard() {
 
             {/* Table */}
             <div className="crm-bg-border rounded-xl  overflow-hidden">
-                <Table>
-                    <TableHeader>
-                        <TableRow className="bg-background h-14">
-                            <TableHead>Recipient</TableHead>
-                            <TableHead>Message</TableHead>
-                            <TableHead>Type</TableHead>
-                            <TableHead>Ticket</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead>Date</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {filteredSMS.length === 0 ? (
-                            <TableRow>
-                                <TableCell colSpan={6} className="text-center py-8 text-gray-500">
-                                    No SMS messages found
-                                </TableCell>
-                            </TableRow>
-                        ) : (
-                            filteredSMS.slice(0, 50).map(sms => {
-                                return (
-                                    <TableRow key={sms.id} className="cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-800" onClick={() => setSelectedSMS(sms)}>
-                                        <TableCell>
-                                            <div>
-                                                <p className="font-medium text-gray-900 dark:text-white">{sms.recipient_name}</p>
-                                                <p className="text-xs text-gray-500">{sms.recipient_phone}</p>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell className="max-w-xs">
-                                            <p className="truncate text-sm text-gray-600 dark:text-gray-400">{sms.message}</p>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Badge variant="outline" className={sms.type === 'system' ? 'border-border text-blue-600' : 'border-border text-primary-color'}>
-                                                {sms.type === 'system' ? <Bot className="w-3 h-3 mr-1" /> : <User className="w-3 h-3 mr-1" />}
-                                                {sms.type}
-                                            </Badge>
-                                        </TableCell>
-                                        <TableCell>
-                                            <span className="text-sm font-mono text-primary-color">{sms.ticket_id}</span>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Badge className={cn('w-16 flex items-center justify-center gap-1', statusConfig[sms.status as keyof typeof statusConfig].color)}>
-                                                {sms.status}
-                                            </Badge>
-                                        </TableCell>
-                                        <TableCell className="text-sm text-gray-600 dark:text-gray-400">
-                                            {format(new Date(sms.sent_at), 'dd/MM/yyyy HH:mm')}
-                                        </TableCell>
-                                    </TableRow>
-                                );
-                            })
-                        )}
-                    </TableBody>
-                </Table>
+                <CrmTable
+                    data={filteredSMS}
+                    isPaginated
+                    header={{
+                        title: 'Tickets',
+                        resultCount: filteredSMS.length,
+                        button: null,
+                        searchPlaceholder: 'Search a ticket',
+                        filters: [
+                            {
+                                key: 'recipient',
+                                label: 'Recipient',
+                                type: 'select',
+                                options: [...personnel.map((p) => p.name)]
+                            },
+                            {
+                                key: 'type',
+                                label: 'Type',
+                                type: 'select',
+                                options: channels,
+                            },
+                            {
+                                key: 'ticket',
+                                label: 'Ticket',
+                                type: 'input',
+                            },
+                            {
+                                key: 'status',
+                                label: 'Status',
+                                type: 'select',
+                                options: ['Open', 'Resolved', 'Pending', 'Escalated'],
+                            }
+                        ]
+                    }}
+                    columns={[
+                        {
+                            key: 'recipient', header: 'Recipient', render: (sms: any) =>
+                                <div>
+                                    <p className="font-medium text-gray-900 dark:text-white">{sms.recipient_name}</p>
+                                    <p className="text-xs text-gray-500">{sms.recipient_phone}</p>
+                                </div>
+                        },
+                        {
+                            key: 'message', header: 'Message', render: (sms: any) =>
+                                <p className="truncate text-sm text-gray-600 dark:text-gray-400">{sms.message}</p>
+                        },
+                        {
+                            key: 'type', header: 'Type', render: (sms: any) =>
+                                <Badge variant="outline" className={sms.type === 'system' ? 'border-border text-blue-600' : 'border-border text-primary-color'}>
+                                    {sms.type === 'system' ? <Bot className="w-3 h-3 mr-1" /> : <User className="w-3 h-3 mr-1" />}
+                                    {sms.type}
+                                </Badge>
+                        },
+                        {
+                            key: 'ticket', header: 'Ticket', render: (sms: any) =>
+                                <span className="text-sm font-mono text-primary-color">{sms.ticket_id}</span>
+                        },
+                        {
+                            key: 'status', header: 'Status', render: (sms: any) =>
+                                <Badge className={cn('w-16 flex items-center justify-center gap-1', statusConfig[sms.status as keyof typeof statusConfig].color)}>
+                                    {sms.status}
+                                </Badge>
+                        },
+                        { key: 'created_at', header: 'Date', render: (sms: any) => {format(new Date(sms.sent_at), 'dd/MM/yyyy HH:mm')} },
+                        { key: 'actions', header: 'Actions', render: (sms: any) => <Actions sms={sms} /> },
+                    ]}
+                />
+                
             </div>
 
             <SendSMSModal
@@ -247,15 +261,26 @@ export default function SMSDashboard() {
                     console.log('SMS sent:', data);
                     setShowSendModal(false);
                 }}
-                recipient={{ name: '', phone: '' }}
                 ticketId=""
             />
 
-            <SMSDetailModal
-                sms={selectedSMS}
-                open={!!selectedSMS}
-                onClose={() => setSelectedSMS(null)}
-            />
         </div>
     );
+}
+
+
+
+function Actions({ sms }: { sms: any }) {
+    return (
+        <Popover>
+            <PopoverTrigger>
+                <MoreVertical className="w-4 h-4" />
+            </PopoverTrigger>
+            <PopoverContent align='end' className="w-56 px-2 overflow-hidden">
+                <SMSDetailModal sms={sms}>
+                    <div className='w-52 px-2 py-2 text-left transition-colors duration-200 hover:bg-accent hover:text-primary-color rounded'>View SMS</div>
+                </SMSDetailModal>
+            </PopoverContent>
+        </Popover>
+    )
 }

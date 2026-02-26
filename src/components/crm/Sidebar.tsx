@@ -38,6 +38,7 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
         { icon: Ticket, label: 'All Tickets', path: 'alltickets' },
         { icon: Package2, label: 'Products', path: 'products' },
         { icon: MessageSquare, label: 'SMS', path: 'sms' },
+        { icon: Settings, label: 'Admin Configuration', path: 'adminconfiguration' },
     ];
 
     const agentNavItems = [
@@ -92,10 +93,11 @@ export default function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobile
                 <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 dark:border-slate-800">
                     {!collapsed && (
                         <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-lg bg-primary-color flex items-center justify-center">
+                            {/* <div className="w-8 h-8 rounded-lg bg-primary-color flex items-center justify-center">
                                 <span className="text-white font-bold text-sm">A</span>
-                            </div>
-                            <span className="font-semibold text-lg text-primary-color">aYo CRM</span>
+                                </div> */}
+                            <img src="/logo.svg" alt="Logo" className="w-8 h-8" />
+                            <span className="font-semibold text-lg text-primary-color">CRM</span>
                         </div>
                     )}
                     {collapsed && (
